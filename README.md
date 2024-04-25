@@ -9,5 +9,5 @@ sudo service docker status
 sudo groupadd docker
 sudo usermod -a -G docker ec2-user
 newgrp docker
-docker — version
+docker —-version
 ```
