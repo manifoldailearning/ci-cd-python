@@ -35,8 +35,7 @@ jobs:
 
       - name: Push image to Amazon ECR
         run: |
-          docker tag   
-          my-mlapp:latest ${{ steps.login-ecr.outputs.registry }}/my-mlapp:latest
+          docker tag my-mlapp:latest ${{ steps.login-ecr.outputs.registry }}/my-mlapp:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/my-mlapp:latest
 
       - name: Login to EC2
