@@ -38,6 +38,11 @@ jobs:
           docker tag my-mlapp:latest ${{ steps.login-ecr.outputs.registry }}/my-mlapp:latest
           docker push ${{ steps.login-ecr.outputs.registry }}/my-mlapp:latest
 
+      - name: Add EC2 host key to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          
       - name: Login to EC2
         uses: appleboy/ssh-action@v0.1.1
         with:
