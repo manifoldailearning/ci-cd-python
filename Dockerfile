@@ -1,13 +1,28 @@
-FROM python:3.10
+FROM python:3.10-slim-buster
 
-WORKDIR /app
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip 
+#copy to code directory
+COPY . /code 
 
-COPY . .
+#set permissions
 
-EXPOSE 5000
+RUN chmod +x /code
 
-# Command to start your web server 
-CMD ["python", "src/app.py"]  
+RUN pip install --no-cache-dir --upgrade -r code/requirements.txt
+
+EXPOSE 8005
+
+WORKDIR /code
+
+ENV PYTHONPATH "${PYTHONPATH}:/code"
+
+CMD pip install -e .
+
+CMD ["python","prediction_model/training_pipeline.py"]
+WORKDIR /code
+CMD ["python","main.py"]
