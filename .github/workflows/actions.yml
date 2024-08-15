@@ -50,7 +50,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
 
-    - name: Copy docker-compose.yml
+      - name: Copy docker-compose.yml
         run: |
           ssh -vvv ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "echo 'Testing SSH connection'" # Add this line for debugging
           scp docker-compose.yml ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USERNAME }}/
