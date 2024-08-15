@@ -54,13 +54,12 @@ jobs:
             echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
 
-      - name: Copy docker-compose.yml
-        run: |
-          ssh -vvv ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "echo 'Testing SSH connection'" # Add this line for debugging
-          scp docker-compose.yml ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USERNAME }}/
-
       # - name: Copy docker-compose.yml
-      #   run: scp docker-compose.yml ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USERNAME }}/
+      #   run: |
+      #     scp docker-compose.yml ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USERNAME }}/
+
+      - name: Copy docker-compose.yml
+        run: scp docker-compose.yml ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USERNAME }}/
 
       - name: Pull image from ECR and deploy with docker-compose
         run: |
