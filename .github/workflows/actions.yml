@@ -47,6 +47,6 @@ jobs:
           DOCKER_HOST: ssh://${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}
         run: |
           # Update the image name in docker-compose.yml to pull from ECR
-          sed -i "s/your-image-name/${{ steps.login-ecr.outputs.registry }}\/your-ecr-repository-name/g" docker-compose.yml
+          sed -i "s/my-mlapp/${{ steps.login-ecr.outputs.registry }}\/my-mlapp/g" docker-compose.yml
           docker-compose pull
           docker-compose up -d
