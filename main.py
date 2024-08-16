@@ -1,3 +1,4 @@
+# Importing Dependencies
 from fastapi import FastAPI
 from pydantic import BaseModel
 import uvicorn
@@ -7,8 +8,6 @@ import pandas as pd
 import sys
 import os
 from pathlib import Path
-from prediction_model.predict import generate_predictions 
-from prometheus_fastapi_instrumentator import Instrumentator
 # # Adding the below path to avoid module not found error
 PACKAGE_ROOT = Path(os.path.abspath(os.path.dirname(__file__))).parent
 sys.path.append(str(PACKAGE_ROOT))
@@ -19,13 +18,7 @@ from prediction_model.processing.data_handling import load_pipeline,load_dataset
 
 classification_pipeline = load_pipeline(config.MODEL_NAME)
 
-port = int(os.environ.get("PORT", 8005))
-
-app = FastAPI(
-    title="Loan Prediction App using API - CI CD Jenkins",
-    description = "A Simple CI CD Demo",
-    version='1.0'
-)
+app = FastAPI()
 
 
 
@@ -80,6 +73,4 @@ def predict_loan_status(loan_details: LoanPred):
 	return {'Status of Loan Application':pred}
 
 if __name__ == '__main__':
-	uvicorn.run("main:app", host="0.0.0.0",port=port,reload=False)
-
-Instrumentator().instrument(app).expose(app)
+	uvicorn.run("main:app", host="0.0.0.0",port=8005,reload=False)
